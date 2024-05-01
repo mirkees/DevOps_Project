@@ -19,6 +19,7 @@ public class TemperatureSensor extends AbstractBehavior<TemperatureSensor.Temper
 
         public ReadTemperature(Optional<Double> value) {
             this.value = value;
+            
         }
     }
 
