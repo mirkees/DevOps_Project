@@ -30,7 +30,7 @@ public class Environment extends AbstractBehavior<Environment.EnvironmentCommand
     }
 
     private double temperature = 19.0;
-    private boolean isSunny = false;
+
 
     private final TimerScheduler<EnvironmentCommand> temperatureTimeScheduler;
     private final TimerScheduler<EnvironmentCommand> weatherTimeScheduler;
@@ -64,7 +64,7 @@ public class Environment extends AbstractBehavior<Environment.EnvironmentCommand
 
     private Behavior<EnvironmentCommand> onSetWeather(SetWeather command){
         currentWeather = command.weatherType;
-        getContext().getLog().info("Manually set the weather to {}", isSunny);
+        getContext().getLog().info("Manually set the weather to {}", currentWeather);
         return this;
     } //--
 
