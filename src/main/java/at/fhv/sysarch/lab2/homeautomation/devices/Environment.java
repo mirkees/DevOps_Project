@@ -81,7 +81,7 @@ public class Environment extends AbstractBehavior<Environment.EnvironmentCommand
         this.weatherTimeScheduler = weatherTimer;
         this.temperatureSensor = temperatureSensor;
         this.weatherSensor = weatherSensor;
-        this.temperatureTimeScheduler.startTimerAtFixedRate(new TemperatureChanger(), Duration.ofSeconds(5));
+        this.temperatureTimeScheduler.startTimerAtFixedRate(new TemperatureChanger(), Duration.ofSeconds(500));
         this.weatherTimeScheduler.startTimerAtFixedRate(new WeatherConditionsChanger(Optional.empty()), Duration.ofSeconds(10));
     }
 
