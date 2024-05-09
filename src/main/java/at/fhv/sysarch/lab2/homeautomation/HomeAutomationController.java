@@ -13,6 +13,7 @@ import at.fhv.sysarch.lab2.homeautomation.devices.Environment;
 import at.fhv.sysarch.lab2.homeautomation.devices.MediaStation;
 import at.fhv.sysarch.lab2.homeautomation.devices.TemperatureSensor;
 import at.fhv.sysarch.lab2.homeautomation.devices.WeatherSensor;
+import at.fhv.sysarch.lab2.homeautomation.devices.Fridge.Fridge;
 import at.fhv.sysarch.lab2.homeautomation.ui.UI;
 
 public class HomeAutomationController extends AbstractBehavior<Void>{
@@ -22,6 +23,7 @@ public class HomeAutomationController extends AbstractBehavior<Void>{
     private ActorRef<WeatherSensor.WeatherCommand> weatherSenstor;
     private ActorRef<Blinds.BlindsCommand> blinds;
     private ActorRef<MediaStation.MediaStationCommand> mediaStation;
+    private ActorRef<Fridge.FridgeCommand> fridge;
 
     public static Behavior<Void> create() {
         return Behaviors.setup(HomeAutomationController::new);
@@ -38,9 +40,11 @@ public class HomeAutomationController extends AbstractBehavior<Void>{
         this.weatherSenstor = getContext().spawn(WeatherSensor.create(this.blinds, "2", "2"), "weatherSensor"); //--
 
         this.mediaStation = getContext().spawn(MediaStation.create("3", "3", blinds), "Mediastation"); //--
+        this.fridge = getContext().spawn(Fridge.create("4", "77"), "Fridge");
+
 
         getContext().spawn(Environment.create(tempSensor, weatherSenstor), "Environment"); //--
-        ActorRef<Void> ui = getContext().spawn(UI.create(this.tempSensor, this.airCondition), "UI");
+        ActorRef<Void> ui = getContext().spawn(UI.create(this.tempSensor, this.airCondition, this.fridge, this.mediaStation ), "UI");
         getContext().getLog().info("HomeAutomation Application started");
     }
 

@@ -5,6 +5,8 @@ import akka.actor.typed.javadsl.ActorContext;
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.Behaviors;
 import akka.actor.typed.javadsl.Receive;
+import akka.actor.typed.ActorRef;
+
 
 public class WeightSensor extends AbstractBehavior<WeightSensor.WeightSensorCommand>{
 
@@ -25,23 +27,46 @@ public class WeightSensor extends AbstractBehavior<WeightSensor.WeightSensorComm
         public RemoveWeightCommand(int weight){
             this.weight = weight;
         }
-
-
     }
 
+    public static final class GetCurrentWeightCommand implements WeightSensorCommand{
+        final ActorRef<CurrentWeightResponse> replyTo;
+
+        public GetCurrentWeightCommand(ActorRef<CurrentWeightResponse> replyTo){
+            this.replyTo = replyTo;
+        }
+    }
+
+
+    public static final class CurrentWeightResponse implements WeightSensorCommand {
+        final int currentWeight;
+
+        public CurrentWeightResponse(int currentWeight){
+            this.currentWeight = currentWeight;
+        }
+    }
+
+
+    
+
+
+
     private int weight = 0;
-    private int maxWeight = 10000;
+
 
 
     public WeightSensor(ActorContext<WeightSensorCommand> context){
         super(context);
     }
+
+
         
     @Override
     public Receive<WeightSensorCommand> createReceive(){
         return newReceiveBuilder()
         .onMessage(RemoveWeightCommand.class, this::onRemoveItem)
         .onMessage(AddWeightCommand.class, this::onAddItem)
+        .onMessage(GetCurrentWeightCommand.class, this::onGetCurrentWeight)
         .build();
     }
 
@@ -62,7 +87,9 @@ public class WeightSensor extends AbstractBehavior<WeightSensor.WeightSensorComm
     }   
 
 
-
-
+    private Behavior<WeightSensorCommand> onGetCurrentWeight(GetCurrentWeightCommand command){
+        command.replyTo.tell(new CurrentWeightResponse(weight));
+        return this;
+    }
 
 }

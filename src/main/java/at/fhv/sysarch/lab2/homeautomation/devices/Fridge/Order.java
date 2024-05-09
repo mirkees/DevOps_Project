@@ -1,8 +1,7 @@
-/*package at.fhv.sysarch.lab2.homeautomation.devices.Fridge;
+package at.fhv.sysarch.lab2.homeautomation.devices.Fridge;
 
 import java.util.Optional;
 
-import scala.quoted.Quotes.reflectModule.defnModule;
 
 public record Order(
     String name,
@@ -24,4 +23,3 @@ public record Order(
     }
 
 }
-*/
