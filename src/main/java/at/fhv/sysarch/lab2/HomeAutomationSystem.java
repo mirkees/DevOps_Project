@@ -9,6 +9,6 @@ public class HomeAutomationSystem {
         ActorSystem<Void> home = ActorSystem.create(HomeAutomationController.create(), "HomeAutomation");
     }
 
-    //Das ist ein test
+    //Das ist test 2 
 
 }
