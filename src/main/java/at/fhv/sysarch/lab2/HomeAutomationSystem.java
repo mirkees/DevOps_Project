@@ -9,6 +9,6 @@ public class HomeAutomationSystem {
         ActorSystem<Void> home = ActorSystem.create(HomeAutomationController.create(), "HomeAutomation");
     }
 
-    //Das ist test mit docker containe 1  
+    //Das ist test mit docker container  
 
 }
