@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="DevOps_Pipeline_Example.Devops_project.DevopsProjectApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-10-04T09:22:36" hostname="MBP-von-Markus.fritz.box" time="0.31">
+  <properties/>
+  <testcase name="contextLoads()" classname="DevOps_Pipeline_Example.Devops_project.DevopsProjectApplicationTests" time="0.31"/>
+  <system-out><![CDATA[11:22:35.692 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [DevOps_Pipeline_Example.Devops_project.DevopsProjectApplicationTests]: DevopsProjectApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+11:22:35.722 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration DevOps_Pipeline_Example.Devops_project.DevopsProjectApplication for test class DevOps_Pipeline_Example.Devops_project.DevopsProjectApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.3.4)
+
+2024-10-04T11:22:35.832+02:00  INFO 13952 --- [Devops_project] [    Test worker] D.D.DevopsProjectApplicationTests        : Starting DevopsProjectApplicationTests using Java 17.0.12 with PID 13952 (started by markuselmenreich in /Users/markuselmenreich/coding/sem5DevOps/DevOps_Project)
+2024-10-04T11:22:35.832+02:00  INFO 13952 --- [Devops_project] [    Test worker] D.D.DevopsProjectApplicationTests        : No active profile set, falling back to 1 default profile: "default"
+2024-10-04T11:22:36.149+02:00  INFO 13952 --- [Devops_project] [    Test worker] D.D.DevopsProjectApplicationTests        : Started DevopsProjectApplicationTests in 0.388 seconds (process running for 0.737)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
