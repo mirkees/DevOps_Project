@@ -15,7 +15,7 @@ on:
       -  "main" 
       - "markus"
       - "*"
-      
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -29,12 +29,18 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      
       - uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
       - name: Run Docker Hello World
         run: | 
-          docker run hello-world
+          docker build -t my-gradle-app .
+
+      - name: Run the Docker Container
+        run: |    
+          docker run --rm -v $(pwd)/build:/app/build my-gradle-app
+
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
