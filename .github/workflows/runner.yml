@@ -35,11 +35,10 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run Docker Hello World
         run: | 
-          docker build -t my-gradle-app .
+          docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
+          docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
+ 
 
-      - name: List files in /app directory
-        run: |
-          docker run --rm my-gradle-app ls -la /app
         
       - name: Check Gradle version
         run: |

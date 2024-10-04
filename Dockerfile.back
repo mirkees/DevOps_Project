@@ -5,7 +5,7 @@ FROM gradle:8.0.0-jdk17 AS builder
 WORKDIR /app
 
 # Copy the Gradle wrapper files
-COPY gradlew gradlew.bat gradle/wrapper/ /app/
+COPY gradlew gradlew.bat gradle/wrapper/ src /app/
 
 # Ensure the Gradle wrapper script is executable
 RUN chmod +x /app/gradlew
