@@ -2,55 +2,48 @@
 
 name: CI
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: 
       - "main"
       - "markus"
-      - "*" #This is the wildcard flag, this will trigger the pipeline everytime code gets pushed
+      - "*"
   pull_request:
     branches: 
       -  "main" 
       - "markus"
       - "*"
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: self-hosted
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      
+      # Check out the repository
       - uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run Docker Hello World
+      # Build the project using Gradle
+      - name: Run Gradle Build
         run: | 
           docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
+          
+      # Ensure permissions are correct (if needed)
+      - name: Adjust permissions
+        run: | 
           docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
-          ls -al build
- 
-        
+          
+      # Check Gradle version (using gradle:jdk17 instead of my-gradle-app)
       - name: Check Gradle version
         run: |
-          docker run --rm my-gradle-app gradle -v
+          docker run --rm gradle:jdk17 gradle -v
         
-
+      # Run your app (assuming it's built as a jar or another output)
       - name: Run the Docker Container
         run: |    
-          docker run --rm -v $(pwd)/build:/app/build my-gradle-app
-
-
-      # Runs a set of commands using the runners shell
+          docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
+          
+      # Placeholder for future steps
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
