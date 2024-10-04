@@ -9,6 +9,6 @@ public class HomeAutomationSystem {
         ActorSystem<Void> home = ActorSystem.create(HomeAutomationController.create(), "HomeAutomation");
     }
 
-    //Das ist test mit 
+    //Das ist test mit trigger auf den markus branch
 
 }

@@ -6,10 +6,16 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: 
+      - "main"
+      - "markus"
+      - "*" #This is the wildcard flag, this will trigger the pipeline everytime code gets pushed
   pull_request:
-    branches: [ "main" ]
-
+    branches: 
+      -  "main" 
+      - "markus"
+      - "*"
+      
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
