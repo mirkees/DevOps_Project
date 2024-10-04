@@ -37,6 +37,15 @@ jobs:
         run: | 
           docker build -t my-gradle-app .
 
+      - name: List files in /app directory
+        run: |
+          docker run --rm my-gradle-app ls -la /app
+        
+      - name: Check Gradle version
+        run: |
+          docker run --rm my-gradle-app gradle -v
+        
+
       - name: Run the Docker Container
         run: |    
           docker run --rm -v $(pwd)/build:/app/build my-gradle-app
