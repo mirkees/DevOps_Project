@@ -4,14 +4,17 @@ FROM gradle:7.0.0-jdk11 as builder
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy only Gradle wrapper files first (if they exist) to leverage Docker caching
-COPY gradlew* gradle/ /app/
+# Copy the Gradle wrapper files
+COPY gradlew gradlew.bat /app/
+
+# Copy the Gradle wrapper directory
+COPY .gradle /app/.gradle
 
 # Copy the rest of the project files
 COPY . /app
 
-# Run the Gradle build
-RUN gradle build --stacktrace --info
+# Run the Gradle build using the Gradle wrapper
+RUN ./gradlew build --stacktrace --info
 
 # Stage 2: Create the final runtime image
 FROM openjdk:11-jre-slim
