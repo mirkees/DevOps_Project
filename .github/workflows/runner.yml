@@ -37,8 +37,8 @@ jobs:
         run: | 
           docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
           docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
+          ls -al build
  
-
         
       - name: Check Gradle version
         run: |
