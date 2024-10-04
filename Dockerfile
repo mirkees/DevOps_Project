@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM gradle:7.0.0-jdk11 as builder
+FROM gradle:7.0.0-jdk11 AS builder  
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,8 +7,8 @@ WORKDIR /app
 # Copy the Gradle wrapper files
 COPY gradlew gradlew.bat /app/
 
-# Copy the Gradle wrapper directory
-COPY .gradle /app/.gradle
+# Ensure the Gradle wrapper script is executable
+RUN chmod +x /app/gradlew
 
 # Copy the rest of the project files
 COPY . /app
