@@ -52,7 +52,7 @@ jobs:
             -e SONAR_LOGIN="${{ secrets.SONAR_TOKEN }}" \
             -v "$GITHUB_WORKSPACE:/usr/src" \
             sonarsource/sonar-scanner-cli \
-            -Dsonar.projectKey=your-project-key \
+            -Dsonar.projectKey=mirkees_DevOps_Project \
             -Dsonar.sources=./src \
             -Dsonar.language=java \
             -Dsonar.java.binaries=./build
