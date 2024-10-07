@@ -56,6 +56,7 @@ jobs:
             -Dsonar.sources=./src \
             -Dsonar.language=java \
             -Dsonar.java.binaries=./build
+            -X 
         
 
           
