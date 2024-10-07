@@ -44,19 +44,14 @@ jobs:
         run: |    
           docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
 
-      - name: SonarQube Scan
-        run: | 
-            docker run \
-            --rm \
-            -e SONAR_HOST_URL="https://sonarcloud.io" \
-            -e SONAR_LOGIN="2c5f8c212e8c304463d8e17a882fb0e5f9f5f925" \
-            -v "$GITHUB_WORKSPACE:/usr/src" \
-            sonarsource/sonar-scanner-cli \
-            -Dsonar.projectKey=mirkees_DevOps_Project \
-            -Dsonar.sources=./src \
-            -Dsonar.language=java \
-            -Dsonar.java.binaries=./build
-            -X 
+      - name: Run SonarQube Scan
+        run: |
+          docker run \
+          --rm \
+          -e SONAR_HOST_URL="${{ secrets.SONAR_HOST_URL }}" \
+          -v "$GITHUB_WORKSPACE:/usr/src" \
+          sonarsource/sonar-scanner-cli
+        
 
 
         
