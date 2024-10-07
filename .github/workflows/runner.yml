@@ -52,6 +52,7 @@ jobs:
               -e SONAR_LOGIN="b1f01b45754c3d018e4ef659e55347bd05535076" \
               -v "$GITHUB_WORKSPACE:/usr/src" \
               sonarsource/sonar-scanner-cli
+              -X
         
         
 
