@@ -43,8 +43,6 @@ jobs:
       - name: Run the Docker Container
         run: |    
           docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
-      - name: Build MkDocs site using Docker
-        run: |
-          docker run --rm -v 
+
           
 
