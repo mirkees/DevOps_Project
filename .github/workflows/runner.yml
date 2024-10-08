@@ -52,6 +52,9 @@ jobs:
             -e SONAR_LOGIN="${{ secrets.SONAR_TOKEN }}" \
             -v "$GITHUB_WORKSPACE:/usr/src" \
             sonarsource/sonar-scanner-cli
+            -Dsonar.projectKey=mirkees_DevOps_Project \
+            -Dsonar.sources=/usr/src/src/main \
+            -Dsonar.qualitygate.wait=true
             -X
         
         
