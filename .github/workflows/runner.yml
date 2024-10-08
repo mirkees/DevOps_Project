@@ -54,7 +54,8 @@ jobs:
             sonarsource/sonar-scanner-cli
             -Dsonar.projectKey=mirkees_DevOps_Project \
             -Dsonar.sources=/usr/src/src/main \
-            -Dsonar.qualitygate.wait=true
+            -Dsonar.qualitygate.wait=true \
+            -Dsonar.organization=mirkees \
             -X
         
         
