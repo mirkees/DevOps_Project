@@ -49,9 +49,10 @@ jobs:
             --rm \
             -e SONAR_HOST_URL="https://sonarqube.goa.systems" \
             -e SONAR_LOGIN="sqp_016fff0e633a7414b3f7471c39459d6d75bce059" \
+            -e "SONAR_SCANNER_OPTS="-Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
+            --network host \
             -v "$PWD:/usr/src" \
             sonarsource/sonar-scanner-cli \
-            -e "SONAR_SCANNER_OPTS="-Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
             -X
         
         
