@@ -48,9 +48,7 @@ jobs:
             docker run \
             --rm \
             -v "$PWD:/usr/src" \
-            -e SONAR_HOST_URL="https://sonarqube.goa.systems" \
-            -e SONAR_LOGIN="sqp_016fff0e633a7414b3f7471c39459d6d75bce059" \
-            -e "SONAR_SCANNER_OPTS=-Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
+            -e "SONAR_SCANNER_OPTS=-Dsonar.host.url=https://sonarqube.goa.systems -Dsonar.token=sqp_016fff0e633a7414b3f7471c39459d6d75bce059 -Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
             --network host \
             sonarsource/sonar-scanner-cli:10
         
