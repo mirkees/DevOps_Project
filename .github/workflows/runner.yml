@@ -51,9 +51,7 @@ jobs:
             -e SONAR_LOGIN="sqp_016fff0e633a7414b3f7471c39459d6d75bce059" \
             -v "$PWD:/usr/src" \
             sonarsource/sonar-scanner-cli \
-            -Dsonar.projectKey=team1 \
-            -Dsonar.sources=src/main/java \
-            -Dsonar.qualitygate.wait=true \
+            -e "SONAR_SCANNER_OPTS="-Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
             -X
         
         
