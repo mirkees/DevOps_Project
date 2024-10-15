@@ -1,0 +1,64 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: 
+      - "main"
+      - "markus"
+      - "*"
+  pull_request:
+    branches: 
+      -  "main" 
+      - "markus"
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: sqtest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v4
+
+      # Build the project using Gradle
+      - name: Run Gradle Build
+        run: | 
+          docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
+          
+      # Ensure permissions are correct (if needed)
+      - name: Adjust permissions
+        run: | 
+          docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
+          
+      # Check Gradle version (using gradle:jdk17 instead of my-gradle-app)
+      - name: Check Gradle version
+        run: |
+          docker run --rm gradle:jdk17 gradle -v
+        
+      # Run your app (assuming it's built as a jar or another output)
+      - name: Run the Docker Container
+        run: |    
+          docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
+
+      - name: Run SonarQube Scan
+        run: |
+            docker run \
+            --rm \
+            -v "$PWD:/usr/src" \
+            -e "SONAR_SCANNER_OPTS=-Dsonar.host.url=https://sonarqube.goa.systems -Dsonar.token=sqp_016fff0e633a7414b3f7471c39459d6d75bce059 -Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
+            --network host \
+            sonarsource/sonar-scanner-cli:10
+        
+        
+
+
+        
+
+          
+
+
+
+

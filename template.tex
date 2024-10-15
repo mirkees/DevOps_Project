@@ -1,0 +1,72 @@
+\documentclass[12pt]{article} % Document class and font size
+
+% Basic packages for better formatting and functionality
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Page layout settings
+\geometry{
+  a4paper, % Paper size
+  left=25mm, % Left margin
+  right=25mm, % Right margin
+  top=25mm, % Top margin
+  bottom=25mm, % Bottom margin
+}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark} % Left section for header (e.g., section title)
+\fancyfoot[C]{\thepage}  % Centered page number at the bottom
+
+% Title page settings
+\title{Document Title}
+\author{Author Name}
+\date{\today}
+
+% Custom section and subsection styles
+\usepackage{sectsty}
+\sectionfont{\fontsize{14}{16}\selectfont\bfseries\sffamily}
+\subsectionfont{\fontsize{12}{14}\selectfont\itshape}
+
+% Custom font settings
+\usepackage{fontspec}
+\setmainfont{Times New Roman} % Change font here
+
+% Custom command to include images
+\newcommand{\includepicture}[2][]{%
+    \includegraphics[#1]{#2}
+}
+
+% Pandoc-specific variables (overridable via pandoc)
+$if(title)$
+  \title{$title$}
+$endif$
+
+$if(author)$
+  \author{$author$}
+$endif$
+
+$if(date)$
+  \date{$date$}
+$endif$
+
+\begin{document}
+
+% Title page (auto-filled by Pandoc)
+\maketitle
+
+% Table of Contents (optional)
+$if(toc)$
+  \tableofcontents
+  \newpage
+$endif$
+
+% Begin document content
+$body$
+
+\end{document}

@@ -1,9 +1,7 @@
 site_name: DevOps Project Documentation
 
-nav:
-  - Home: index.md
-  - Methods: methods.md
-  - Endpoints: endpoints.md
-
 theme:
   name: material
+nav:
+  - Home: index.md
+

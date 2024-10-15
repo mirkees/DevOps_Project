@@ -19,6 +19,9 @@ jobs:
   build:
     runs-on: sqtest
 
+    env:
+      VERSION: "0.0.1"
+
     steps:
       # Check out the repository
       - uses: actions/checkout@v4
@@ -38,11 +41,32 @@ jobs:
         run: |
           docker run --rm gradle:jdk17 gradle -v
         
-      # Run your app (assuming it's built as a jar or another output)
+      # Build Docker image using Amazon Corretto
+      - name: Build Docker using Amazon Corretto
+        run: |
+          docker build -t 10.0.40.162:5511/myapp:${{ env.VERSION }} --file <(echo 'FROM amazoncorretto:17; COPY build/libs/Devops_project-0.0.1-SNAPSHOT.jar /app.jar; ENTRYPOINT ["java", "-jar", "/app.jar"]') .
+
+      # Tag Docker image with the version
+      - name: Tag Docker Image
+        run: |
+          docker tag 10.0.40.162:5511/myapp:${{ env.VERSION }} 10.0.40.162:5511/myapp:${{ env.VERSION }}
+
+      # Push Docker image to internal registry
+      - name: Push Docker Image
+        run: |
+          docker push 10.0.40.162:5511/myapp:${{env.VERSION}}
+
+      # Run your app using the Docker image built in the previous step
       - name: Run the Docker Container
         run: |    
-          docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
+          docker run --rm 10.0.40.162:5511/myapp:${{ env.VERSION }}
 
+      # Run your app (assuming it's built as a jar or another output)
+      #- name: Run the Docker Container
+        #run: |    
+          #docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
+
+      # Run SonarQube 
       - name: Run SonarQube Scan
         run: |
             docker run \
@@ -51,6 +75,52 @@ jobs:
             -e "SONAR_SCANNER_OPTS=-Dsonar.host.url=https://sonarqube.goa.systems -Dsonar.token=sqp_016fff0e633a7414b3f7471c39459d6d75bce059 -Dsonar.projectKey=team1 -Dsonar.sources=src/main/java -Dsonar.qualitygate.wait=true" \
             --network host \
             sonarsource/sonar-scanner-cli:10
+
+      #Setup SSH Key for Deployment
+      - name: Setup SSH Key for Deployment
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SHH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      #Deploy to the Production Server
+      - name: Deploy to Production Server
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@10.0.40.163 '
+          docker stop myapp || true && docker rm myapp || true;
+          docker pull 10.0.40.162:5511/myapp:${{ env.VERSION }};
+          docker run -d --name myapp -p 8080:8080 10.0.40.162:5511/myapp:${{ env.VERSION }};
+          '
+            
+      #Generate a pdf from the README.md file
+      - name: Generate pdf using pandoc
+        run: |
+          docker run --rm \
+          --volume "$(pwd):/data" \
+          --user $(id -u):$(id -g) \
+          pandoc/extra README.md -o README.pdf --template=template.tex
+
+
+      # Generate HTML documentation
+      - name: Generate HTML Documentation
+        run: |
+          docker run --rm -v "$PWD:/docs" squidfunk/mkdocs-material build
+
+
+      # Build and Push Documentation Container
+      - name: Build and Push Documentation Container
+        run: |
+          docker build -t 10.0.40.162:5511/documentation:${{ env.VERSION }} -f Documentation.dockerfile .
+          docker push 10.0.40.162:5511/documentation:${{ env.VERSION }}
+
+      # Deploy to Production Server
+      - name: Deploy Documentation to Production Server
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@10.0.40.163 '
+            docker pull 10.0.40.162:5511/documentation:${{ env.VERSION }};
+            docker stop documentation || true && docker rm documentation || true;
+            docker run -d --name documentation -p 8081:80 10.0.40.162:5511/documentation:${{ env.VERSION }};
+          '
         
         
 
