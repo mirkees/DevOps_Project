@@ -41,33 +41,20 @@ jobs:
         run: |
           docker run --rm gradle:jdk17 gradle -v
         
-      # Run the Java application using Amazon Corretto
-      - name: Run Java Application using Amazon Corretto
+# Build Docker image using Amazon Corretto
+      - name: Build Docker using Amazon Corretto
         run: |
-          docker run --rm \
-          -v "$PWD/build/libs:/app" \
-          amazoncorretto:17 \
-          java -jar /app/Devops_project-0.0.1-SNAPSHOT.jar
+          echo 'FROM amazoncorretto:17' > Dockerfile.temp
+          echo 'COPY build/libs/Devops_project-0.0.1-SNAPSHOT.jar /app.jar' >> Dockerfile.temp
+          echo 'ENTRYPOINT ["java", "-jar", "/app.jar"]' >> Dockerfile.temp
+          docker build -t 10.0.40.162:5511/myapp:${{ env.VERSION }} -f Dockerfile.temp .
+          rm Dockerfile.temp
 
-      # Tag Docker image with the version
-      - name: Tag Docker Image
-        run: |
-          docker tag 10.0.40.162:5511/myapp:${{ env.VERSION }} 10.0.40.162:5511/myapp:${{ env.VERSION }}
 
       # Push Docker image to internal registry
       - name: Push Docker Image
         run: |
           docker push 10.0.40.162:5511/myapp:${{env.VERSION}}
-
-      # Run your app using the Docker image built in the previous step
-      - name: Run the Docker Container
-        run: |    
-          docker run --rm 10.0.40.162:5511/myapp:${{ env.VERSION }}
-
-      # Run your app (assuming it's built as a jar or another output)
-      #- name: Run the Docker Container
-        #run: |    
-          #docker run --rm -v $(pwd)/build:/app/build gradle:jdk17
 
       # Run SonarQube 
       - name: Run SonarQube Scan
