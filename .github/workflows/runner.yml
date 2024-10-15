@@ -41,10 +41,13 @@ jobs:
         run: |
           docker run --rm gradle:jdk17 gradle -v
         
-      # Build Docker image using Amazon Corretto
-      - name: Build Docker using Amazon Corretto
+      # Run the Java application using Amazon Corretto
+      - name: Run Java Application using Amazon Corretto
         run: |
-          docker build -t 10.0.40.162:5511/myapp:${{ env.VERSION }} --file <(echo 'FROM amazoncorretto:17; COPY build/libs/Devops_project-0.0.1-SNAPSHOT.jar /app.jar; ENTRYPOINT ["java", "-jar", "/app.jar"]') .
+          docker run --rm \
+          -v "$PWD/build/libs:/app" \
+          amazoncorretto:17 \
+          java -jar /app/Devops_project-0.0.1-SNAPSHOT.jar
 
       # Tag Docker image with the version
       - name: Tag Docker Image
