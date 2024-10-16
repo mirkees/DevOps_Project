@@ -87,7 +87,7 @@ jobs:
           docker run --rm \
           --volume "$(pwd):/data" \
           --user $(id -u):$(id -g) \
-          pandoc/extra README.md -o README.pdf --template=template.tex
+          pandoc/extra README.md -o README.pdf --template=template.tex 
 
 
       # Generate HTML documentation
