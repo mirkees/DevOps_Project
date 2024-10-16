@@ -106,7 +106,7 @@ jobs:
       # Deploy to Production Server
       - name: Deploy Documentation to Production Server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@10.0.40.163 '
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no production@5.75.241.180 '
             docker pull 5.75.241.180:5000/documentation:${{ env.VERSION }};
             docker stop documentation || true && docker rm documentation || true;
             docker run -d --name documentation -p 8081:80 5.75.241.180:5000/documentation:${{ env.VERSION }};
