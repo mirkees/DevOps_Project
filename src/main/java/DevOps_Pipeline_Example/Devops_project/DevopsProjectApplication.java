@@ -10,4 +10,3 @@ public class DevopsProjectApplication {
 		SpringApplication.run(DevopsProjectApplication.class, args);
 	}
 }
-//4

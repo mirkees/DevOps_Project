@@ -76,10 +76,10 @@ jobs:
       #Deploy to the Production Server
       - name: Deploy to Production Server
         run: |
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@10.0.40.163 '
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no production@5.75.241.180 '
           docker stop myapp || true && docker rm myapp || true;
-          docker pull 10.0.40.162:5511/myapp:${{ env.VERSION }};
-          docker run -d --name myapp -p 8080:8080 10.0.40.162:5511/myapp:${{ env.VERSION }};
+          docker pull 5.75.241.180:5000/myapp:${{ env.VERSION }};
+          docker run -d --name myapp -p 8080:8080 5.75.241.180:5000/myapp:${{ env.VERSION }};
           '
             
       #Generate a pdf from the README.md file
