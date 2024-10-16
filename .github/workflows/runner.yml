@@ -87,7 +87,7 @@ jobs:
           docker run --rm \
           --volume "$(pwd):/data" \
           --user $(id -u):$(id -g) \
-          pandoc/latex README.md -o README.pdf --template=template.tex --pdf-engine=lualatex
+          pandoc/latex docs/README.md -o README.pdf --template=template.tex --pdf-engine=lualatex
 
 
       # Generate HTML documentation
