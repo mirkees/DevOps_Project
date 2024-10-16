@@ -22,6 +22,12 @@ jobs:
       VERSION: "0.0.1"
 
     steps:
+
+      # Fix permissions before checkout
+      - name: Adjust permissions
+        run: |
+          sudo chown -R $(id -u):$(id -g) /home/svcgithub/actions-runner/_work/DevOps_Project/DevOps_Project
+
       # Check out the repository
       - uses: actions/checkout@v4
 
