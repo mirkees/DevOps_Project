@@ -10,3 +10,4 @@ public class DevopsProjectApplication {
 		SpringApplication.run(DevopsProjectApplication.class, args);
 	}
 }
+//g
