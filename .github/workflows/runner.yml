@@ -99,16 +99,16 @@ jobs:
       # Build and Push Documentation Container
       - name: Build and Push Documentation Container
         run: |
-          docker build -t 10.0.40.162:5511/documentation:${{ env.VERSION }} -f Documentation.dockerfile .
-          docker push 10.0.40.162:5511/documentation:${{ env.VERSION }}
+          docker build -t 5.75.241.180:5000/documentation:${{ env.VERSION }} -f Documentation.dockerfile .
+          docker push 5.75.241.180:5000/documentation:${{ env.VERSION }}
 
       # Deploy to Production Server
       - name: Deploy Documentation to Production Server
         run: |
           ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no user@10.0.40.163 '
-            docker pull 10.0.40.162:5511/documentation:${{ env.VERSION }};
+            docker pull 5.75.241.180:5000/documentation:${{ env.VERSION }};
             docker stop documentation || true && docker rm documentation || true;
-            docker run -d --name documentation -p 8081:80 10.0.40.162:5511/documentation:${{ env.VERSION }};
+            docker run -d --name documentation -p 8081:80 5.75.241.180:5000/documentation:${{ env.VERSION }};
           '
         
         
