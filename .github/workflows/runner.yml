@@ -47,14 +47,14 @@ jobs:
           echo 'FROM amazoncorretto:17' > Dockerfile.temp
           echo 'COPY build/libs/Devops_project-0.0.1-SNAPSHOT.jar /app.jar' >> Dockerfile.temp
           echo 'ENTRYPOINT ["java", "-jar", "/app.jar"]' >> Dockerfile.temp
-          docker build -t 10.0.40.162:5511/myapp:${{ env.VERSION }} -f Dockerfile.temp .
+          docker build -t 5.75.241.180:5000/myapp:${{ env.VERSION }} -f Dockerfile.temp .
           rm Dockerfile.temp
 
 
       # Push Docker image to internal registry
       - name: Push Docker Image
         run: |
-          docker push 10.0.40.162:5511/myapp:${{env.VERSION}}
+          docker push 5.75.241.180:5000/myapp:${{env.VERSION}}
 
       # Run SonarQube 
       - name: Run SonarQube Scan
