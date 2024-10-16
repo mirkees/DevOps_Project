@@ -99,7 +99,7 @@ jobs:
       # Build and Push Documentation Container
       - name: Build and Push Documentation Container
         run: |
-          docker build -t 5.75.241.180:5000/documentation:${{ env.VERSION }} -f Documentation.dockerfile .
+          docker build -t 5.75.241.180:5000/documentation:${{ env.VERSION }} -f Documentation.Dockerfile .
           docker push 5.75.241.180:5000/documentation:${{ env.VERSION }}
 
       # Deploy to Production Server
