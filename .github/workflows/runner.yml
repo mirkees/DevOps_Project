@@ -30,6 +30,16 @@ jobs:
       # Check out the repository
       - uses: actions/checkout@v4
 
+
+
+            #Generate a pdf from the README.md file
+      - name: Generate pdf using pandoc
+        run: |
+          docker run --rm \
+          --volume "$(pwd):/data" \
+          --user $(id -u):$(id -g) \
+          pandoc/extra docs/README.md -o src/main/src/static/README.pdf --template=template.tex --pdf-engine=lualatex
+
       # Build the project using Gradle
       - name: Run Gradle Build
         run: | 
@@ -42,6 +52,9 @@ jobs:
       - name: Check Gradle version
         run: |
           docker run --rm gradle:jdk17 gradle -v
+
+
+
         
 # Build Docker image using Amazon Corretto
       - name: Build Docker using Amazon Corretto
@@ -84,13 +97,7 @@ jobs:
           docker run -d --name myapp -p 8080:8080 5.75.241.180:5000/myapp:${{ env.VERSION }};
           '
             
-      #Generate a pdf from the README.md file
-      - name: Generate pdf using pandoc
-        run: |
-          docker run --rm \
-          --volume "$(pwd):/data" \
-          --user $(id -u):$(id -g) \
-          pandoc/extra docs/README.md -o README.pdf --template=template.tex --pdf-engine=lualatex
+
 
 
       # Generate HTML documentation
