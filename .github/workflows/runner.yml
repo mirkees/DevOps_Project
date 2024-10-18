@@ -38,7 +38,7 @@ jobs:
           docker run --rm \
           --volume "$(pwd):/data" \
           --user $(id -u):$(id -g) \
-          pandoc/extra docs/README.md -o src/main/src/static/README.pdf --template=template.tex --pdf-engine=lualatex
+          pandoc/extra docs/README.md -o src/main/resources/static/README.pdf --template=template.tex --pdf-engine=lualatex
 
       # Build the project using Gradle
       - name: Run Gradle Build
