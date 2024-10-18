@@ -23,6 +23,10 @@ jobs:
 
     steps:
 
+      - name: Adjust permissions
+        run: | 
+          docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
+
       # Check out the repository
       - uses: actions/checkout@v4
 
@@ -32,9 +36,7 @@ jobs:
           docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
           
       # Ensure permissions are correct (if needed)
-      - name: Adjust permissions
-        run: | 
-          docker run --rm -v "$PWD":/project bash:latest chown --recursive $(id -u):$(id -g) /project
+
           
       # Check Gradle version (using gradle:jdk17 instead of my-gradle-app)
       - name: Check Gradle version
