@@ -31,8 +31,7 @@ jobs:
       - uses: actions/checkout@v4
 
 
-
-            #Generate a pdf from the README.md file
+      #Generate a pdf from the README.md file
       - name: Generate pdf using pandoc
         run: |
           docker run --rm \
@@ -43,16 +42,13 @@ jobs:
       # Build the project using Gradle
       - name: Run Gradle Build
         run: | 
-          docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build
-          
-      # Ensure permissions are correct (if needed)
+          docker run --rm -v "$PWD":/home/gradle/project -w /home/gradle/project gradle:jdk17 gradle build test
 
           
       # Check Gradle version (using gradle:jdk17 instead of my-gradle-app)
       - name: Check Gradle version
         run: |
           docker run --rm gradle:jdk17 gradle -v
-
 
 
         
@@ -97,9 +93,6 @@ jobs:
           docker run -d --name myapp -p 8080:8080 5.75.241.180:5000/myapp:${{ env.VERSION }};
           '
             
-
-
-
       # Generate HTML documentation
       - name: Generate HTML Documentation
         run: |
